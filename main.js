@@ -31,10 +31,10 @@ const validateCred = credArray => { // Uses a Luhn algorithm to validate a credi
     for (let i = credArray.length - 1; i >= 0; i--) {
         if (count % 2 === 0 && count !== 1) { // Checking for every other iteration, e.g: a count that is a multiple of two.
             let valueDoubled = credArray[i] * 2;
-            if (valueDoubled > 9) { // If the doubled value is greater than 9, 9 is subrtracted from it before it is passed into the check array.
+            if (valueDoubled > 9) { // If the doubled value is greater than 9, 9 is subrtracted from it before it is added to the sum.
                 valueDoubled -= 9;
             }
-            sum += valueDoubled; // Every other digit is doubled before being returned to the check array.
+            sum += valueDoubled; // Every other digit is doubled before being added to the sum.
         }
         else {
             sum += credArray[i];
@@ -42,14 +42,20 @@ const validateCred = credArray => { // Uses a Luhn algorithm to validate a credi
         count++;
     }
 
-    console.log(sum) // For testing.
+    // console.log(sum) // For testing.
 
-    return sum % 10 === 0; // The checker should return true if the summed array modulo 10 is 0.
+    return sum % 10 === 0; // The checker should return true if the summ modulo 10 is 0.
 }
+
+const findInvalidCards = array => { // Takes an array of nested credit card number arrays and returns an array of all the invalid card numbers.
+     const invalidCardsArray = array.filter(validateCred);
+     return invalidCardsArray;
+}
+
 
 console.log(validateCred(valid2));
 console.log(validateCred(invalid2));
-
+console.log(findInvalidCards(batch));
 
 
 
