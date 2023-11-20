@@ -52,10 +52,40 @@ const findInvalidCards = array => { // Takes an array of nested credit card numb
      return invalidCardsArray;
 }
 
+const idInvalidCardCompanies = array => { // Takes an array of invalid card numbers and returns an array of the companies that issued those cards. Each company will only be listed once.
+    let companiesArray = [];
 
+    for (const cardNumber of array) { // Assigns the company string based on the first digit of the card number.
+        const firstDigit = cardNumber[0];
+        let issuingCompany;
+
+        if (firstDigit === 3) {
+            issuingCompany = 'American Express';
+        } else if (firstDigit === 4) {
+            issuingCompany = 'Visa';
+        } else if (firstDigit === 5) {
+            issuingCompany = 'Mastercard';
+        } else if (firstDigit === 6) {
+            issuingCompany = 'Discover';
+        } else {
+            console.log('Issuer not found.')
+            continue;
+        }
+
+        if (companiesArray.includes(issuingCompany) === false) { // The issuing company is only inserted if it is not already present in the array.
+            companiesArray.push(issuingCompany);
+        }
+    }
+
+    return companiesArray;
+}
+
+
+// Test cases:
 console.log(validateCred(valid2));
 console.log(validateCred(invalid2));
 console.log(findInvalidCards(batch));
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
 
 
 
